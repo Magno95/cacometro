@@ -1,5 +1,5 @@
-import React from 'react';
-import Leaderboard from './leadboard/Leadboard';
+import React from "react";
+import Leaderboard from "../leaderboard/Leaderboard";
 
 function Main() {
   return (

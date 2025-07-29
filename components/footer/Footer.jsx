@@ -1,7 +1,13 @@
-import React from 'react';
+import PWAInstallButton from "components/pwaInstallButton/PWAInstallButton";
+import React from "react";
 
 function Footer() {
-  return <div>Footer</div>;
+  return (
+    <div>
+      Footer
+      <PWAInstallButton />
+    </div>
+  );
 }
 
 export default Footer;
