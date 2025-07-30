@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
-import { addPooperAction } from "actions/poops-actions"; // Aggiusta il path
+import { addPooperAction } from "../../actions/poops-actions"; // Aggiusta il path
 import Link from "next/link";
-import { useAuth } from "hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function AddPooperForm() {
   const [name, setName] = useState("");

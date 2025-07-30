@@ -1,7 +1,7 @@
-import AddPoopForm from 'components/addPoopForm/AddPoopForm';
+import AddPoopForm from "../../components/addPoopForm/AddPoopForm";
 
-import Footer from 'components/footer/Footer';
-import Header from 'components/header/Header';
+import Footer from "../../components/footer/Footer";
+import Header from "../../components/header/Header";
 
 export default function Page() {
   return (

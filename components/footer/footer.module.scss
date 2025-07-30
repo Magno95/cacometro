@@ -1,0 +1,28 @@
+nav.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: #ded7c9;
+  height: 64px;
+  width: 100%;
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+  box-shadow: 0px -4px 20px 1px #313030;
+  .addPoopBtn {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 80px;
+    color: #fff;
+  }
+}

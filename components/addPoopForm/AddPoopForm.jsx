@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import { addPoopAction, listPoopersAction } from "actions/poops-actions";
+import { addPoopAction, listPoopersAction } from "../../actions/poops-actions";
 import Link from "next/link";
-import { useAuth } from "hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function AddPoopForm() {
   const [selectedPooper, setSelectedPooper] = useState("");

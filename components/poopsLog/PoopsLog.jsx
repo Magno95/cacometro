@@ -2,11 +2,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { listPoopsAction } from "../../actions/poops-actions";
+import { listPoopsAction, listPoopsLogAction } from "../../actions/poops-actions";
 
 import Link from "next/link";
 
-function Leaderboard() {
+function PoopsLog() {
   const { isAuthenticated } = useAuth();
   const [poops, setPoops] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,7 +19,7 @@ function Leaderboard() {
   const loadPoops = async () => {
     try {
       setLoading(true);
-      const data = await listPoopsAction();
+      const data = await listPoopsLogAction();
       const sortedData = data.sort((a, b) => b.count - a.count);
       setPoops(sortedData);
     } catch (err) {
@@ -125,4 +125,4 @@ function Leaderboard() {
   );
 }
 
-export default Leaderboard;
+export default PoopsLog;

@@ -1,4 +1,4 @@
-import Manifest from "components/Manifest";
+import Manifest from "../components/Manifest";
 import "../styles/globals.css";
 
 export const metadata = {
