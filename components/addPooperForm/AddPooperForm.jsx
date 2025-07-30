@@ -2,9 +2,12 @@
 import { useState } from "react";
 import { addPooperAction } from "actions/poops-actions"; // Aggiusta il path
 import Link from "next/link";
+import { useAuth } from "hooks/useAuth";
+
 export default function AddPooperForm() {
   const [name, setName] = useState("");
   const [status, setStatus] = useState(null);
+  const { getCaccaId, isAuthenticated } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -16,8 +19,10 @@ export default function AddPooperForm() {
 
     setStatus("Aggiungendo pooper...");
 
+    const caccaId = getCaccaId();
+
     try {
-      const result = await addPooperAction({ name: name.trim() });
+      const result = await addPooperAction({ name: name.trim(), caccaId });
 
       if (result.success) {
         setStatus(`✅ Pooper "${result.pooper.name}" aggiunto con successo!`);

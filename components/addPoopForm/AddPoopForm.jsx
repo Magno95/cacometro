@@ -2,12 +2,14 @@
 import { useState, useEffect } from "react";
 import { addPoopAction, listPoopersAction } from "actions/poops-actions";
 import Link from "next/link";
+import { useAuth } from "hooks/useAuth";
 
 export default function AddPoopForm() {
   const [selectedPooper, setSelectedPooper] = useState("");
   const [poopers, setPoopers] = useState([]);
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(true);
+  const { getCaccaId, isAuthenticated } = useAuth();
 
   useEffect(() => {
     loadPoopers();
@@ -40,8 +42,10 @@ export default function AddPoopForm() {
 
     setStatus("Aggiungendo poop...");
 
+    const caccaId = getCaccaId();
+
     try {
-      const result = await addPoopAction({ pooperName: selectedPooper });
+      const result = await addPoopAction({ pooperName: selectedPooper, caccaId });
 
       if (result.success) {
         setStatus(`✅ Poop aggiunta a ${result.pooperName}! Totale: ${result.count}`);
