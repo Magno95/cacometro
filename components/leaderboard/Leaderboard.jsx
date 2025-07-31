@@ -2,11 +2,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth";
-import { listPoopsAction } from "../../actions/poops-actions";
+import { listPoopersAction, listPoopsAction } from "../../actions/poops-actions";
 
 import Link from "next/link";
 
-function Leaderboard() {
+function Leaderboard({ poopRoomId, pooperName }) {
   const { isAuthenticated } = useAuth();
   const [poops, setPoops] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,8 +19,9 @@ function Leaderboard() {
   const loadPoops = async () => {
     try {
       setLoading(true);
-      const data = await listPoopsAction();
-      const sortedData = data.sort((a, b) => b.count - a.count);
+      const data = await listPoopersAction(poopRoomId);
+      console.log(data);
+      const sortedData = data.poopers.sort((a, b) => b.poop_count - a.poop_count);
       setPoops(sortedData);
     } catch (err) {
       console.error("Errore nel caricare le poops:", err);
@@ -39,7 +40,7 @@ function Leaderboard() {
   }
 
   return (
-    <div>
+    <div className="px-4 py-8">
       <h2>🏆 Leaderboard Cacche</h2>
       {poops.length === 0 ? (
         <p>Nessuna cacca registrata ancora!</p>
@@ -47,13 +48,12 @@ function Leaderboard() {
         <div>
           {poops.map((poop, index) => (
             <div
-              key={poop.pooperName}
+              key={poop.name}
               style={{
                 padding: "10px",
                 margin: "5px 0",
                 border: "1px solid #ccc",
-                borderRadius: "5px",
-                backgroundColor: index === 0 ? "#ffd700" : index === 1 ? "#c0c0c0" : index === 2 ? "#cd7f32" : "#f9f9f9"
+                borderRadius: "5px"
               }}
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -61,9 +61,9 @@ function Leaderboard() {
                   <span style={{ fontSize: "18px", fontWeight: "bold" }}>
                     {index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `${index + 1}.`}
                   </span>
-                  <span style={{ marginLeft: "10px", fontSize: "16px" }}>{poop.pooperName}</span>
+                  <span style={{ marginLeft: "10px", fontSize: "16px" }}>{poop.name}</span>
                 </div>
-                <div style={{ fontSize: "18px", fontWeight: "bold" }}>💩 {poop.count}</div>
+                <div style={{ fontSize: "18px", fontWeight: "bold" }}>💩 {poop.poop_count}</div>
               </div>
               {poop.lastUpdated && (
                 <div style={{ fontSize: "12px", color: "#666", marginTop: "5px" }}>
@@ -74,53 +74,6 @@ function Leaderboard() {
           ))}
         </div>
       )}
-      <button
-        onClick={loadPoops}
-        style={{
-          padding: "10px 20px",
-          backgroundColor: "#007bff",
-          color: "white",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer"
-        }}
-      >
-        🔄 Aggiorna Leaderboard
-      </button>
-
-      <div style={{ marginTop: "20px", display: "flex", gap: "10px" }}>
-        {/* Pulsanti disabilitati se non autenticato */}
-        <Link
-          href="/add-poops"
-          style={{
-            padding: "10px 20px",
-            backgroundColor: isAuthenticated ? "#ffc107" : "#ccc",
-            color: isAuthenticated ? "#212529" : "#666",
-            textDecoration: "none",
-            borderRadius: "5px",
-            display: "inline-block",
-            marginRight: "10px",
-            pointerEvents: isAuthenticated ? "auto" : "none"
-          }}
-        >
-          💩 {isAuthenticated ? "Aggiungi Poop" : "Aggiungi Poop (Disabilitato)"}
-        </Link>
-
-        <Link
-          href="/add-poopers"
-          style={{
-            padding: "10px 20px",
-            backgroundColor: isAuthenticated ? "#28a745" : "#ccc",
-            color: isAuthenticated ? "white" : "#666",
-            textDecoration: "none",
-            borderRadius: "5px",
-            display: "inline-block",
-            pointerEvents: isAuthenticated ? "auto" : "none"
-          }}
-        >
-          👥 {isAuthenticated ? "Gestisci Poopers" : "Gestisci Poopers (Disabilitato)"}
-        </Link>
-      </div>
     </div>
   );
 }

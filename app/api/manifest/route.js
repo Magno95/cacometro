@@ -1,12 +1,12 @@
 // app/api/manifest/route.js
 export function GET(request) {
   const url = new URL(request.url);
-  const caccaId = url.searchParams.get("caccaId") || "default";
+  const poopRoomId = url.searchParams.get("poop_room_id") || "default";
 
   const manifest = {
     name: "Caccometro",
     short_name: "Caccometro",
-    start_url: `/?caccaId=${caccaId}`,
+    start_url: `/?poop_room_id=${poopRoomId}`,
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#000000",
