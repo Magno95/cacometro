@@ -31,6 +31,7 @@ function Main() {
   }, [pooperName, roomCode]);
 
   const handleSave = (roomId: string, roomCode: string, name: string) => {
+    console.log("Saving session:", { roomId, roomCode, name });
     setSession(roomId, roomCode, name);
     setAskOverlay(false);
   };

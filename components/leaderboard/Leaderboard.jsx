@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import { listPoopersAction, listPoopsAction } from "../../actions/poops-actions";
 
-import Link from "next/link";
-
 function Leaderboard({ poopRoomId, pooperName }) {
   const { isAuthenticated } = useAuth();
   const [poops, setPoops] = useState([]);
@@ -13,6 +11,8 @@ function Leaderboard({ poopRoomId, pooperName }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log("poopRoomId:", poopRoomId);
+
     loadPoops();
   }, []);
 

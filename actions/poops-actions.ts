@@ -89,7 +89,7 @@ export async function addPoopAction({ pooperName, roomCode }: { pooperName: stri
 }
 // ===== READ-ONLY ACTIONS =====
 export async function listPoopersAction(
-  roomCode = "AAAA11"
+  roomCode: string
 ): Promise<
   { success: true; poopers: Pick<Pooper, "name" | "poop_count" | "created_at">[] } | { success: false; error: string }
 > {
