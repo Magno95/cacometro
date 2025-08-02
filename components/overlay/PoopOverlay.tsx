@@ -39,8 +39,8 @@ export default function PoopOverlay({ poopRoomCode, onSave }: Props) {
               id="room"
               name="room"
               value={room}
-              onChange={(e) => setRoom(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black"
+              onChange={(e) => setRoom(e.target.value.toUpperCase())}
+              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-black uppercase"
               required
             />
           </div>

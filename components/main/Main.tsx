@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Leaderboard from "../leaderboard/Leaderboard";
 import PoopOverlay from "../overlay/PoopOverlay";
 import { useCaccaSession } from "@/hooks/useCaccaSession";
+import { Button } from "../ui/button";
 
 function Main() {
   const { pooperName, roomCode, setSession } = useCaccaSession();
@@ -39,6 +40,7 @@ function Main() {
   return (
     <main>
       {askOverlay && <PoopOverlay poopRoomCode={roomCodeFromUrl} onSave={handleSave} />}
+      <h2 className="text-2xl  mb-4 text-center">🏆 Leaderboard Cacche</h2>
       {!askOverlay && roomCode && pooperName && <Leaderboard poopRoomId={roomCode} pooperName={pooperName} />}
     </main>
   );
