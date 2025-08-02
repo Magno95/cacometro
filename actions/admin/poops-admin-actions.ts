@@ -22,7 +22,7 @@ export async function adminAddPooperAction({
   const trimmedName = name.trim();
 
   // Trova la stanza
-  const { data: room, error: roomError } = await supabase.from("poop_rooms").select("id").eq("id", roomCode).single();
+  const { data: room, error: roomError } = await supabase.from("poop_rooms").select("id").eq("code", roomCode).single();
 
   if (roomError || !room) {
     throw new Error("Poop room non trovata");
@@ -61,17 +61,31 @@ export async function adminAddPooperAction({
 // Aggiungi poop (admin)
 export async function adminAddPoopAction({
   pooperName,
+  roomCode,
   adminPassword,
   count = 1
 }: {
   pooperName: string;
+  roomCode: string;
   adminPassword: string;
   count?: number;
 }) {
   await validateAdminPassword(adminPassword);
 
-  // Trova il pooper
-  const { data: pooper, error } = await supabase.from("poopers").select("id, name").eq("name", pooperName).single();
+  // Trova la stanza
+  const { data: room, error: roomError } = await supabase.from("poop_rooms").select("id").eq("code", roomCode).single();
+
+  if (roomError || !room) {
+    throw new Error("Poop room non trovata");
+  }
+
+  // Trova il pooper nella stanza specifica
+  const { data: pooper, error } = await supabase
+    .from("poopers")
+    .select("id, name")
+    .eq("name", pooperName)
+    .eq("poop_room_id", room.id)
+    .single();
 
   if (error || !pooper) {
     throw new Error("Pooper non trovato!");
@@ -102,16 +116,31 @@ export async function adminAddPoopAction({
 // Rimuovi poop
 export async function removePoopAction({
   pooperName,
+  roomCode,
   adminPassword,
   count = 1
 }: {
   pooperName: string;
+  roomCode: string;
   adminPassword: string;
   count?: number;
 }) {
   await validateAdminPassword(adminPassword);
 
-  const { data: pooper, error } = await supabase.from("poopers").select("id").eq("name", pooperName).single();
+  // Trova la stanza
+  const { data: room, error: roomError } = await supabase.from("poop_rooms").select("id").eq("code", roomCode).single();
+
+  if (roomError || !room) {
+    throw new Error("Poop room non trovata");
+  }
+
+  // Trova il pooper nella stanza specifica
+  const { data: pooper, error } = await supabase
+    .from("poopers")
+    .select("id")
+    .eq("name", pooperName)
+    .eq("poop_room_id", room.id)
+    .single();
 
   if (error || !pooper) {
     throw new Error("Pooper non trovato!");
@@ -147,14 +176,29 @@ export async function removePoopAction({
 // Reset conteggio poops
 export async function resetPoopCountAction({
   pooperName,
+  roomCode,
   adminPassword
 }: {
   pooperName: string;
+  roomCode: string;
   adminPassword: string;
 }) {
   await validateAdminPassword(adminPassword);
 
-  const { data: pooper, error } = await supabase.from("poopers").select("id").eq("name", pooperName).single();
+  // Trova la stanza
+  const { data: room, error: roomError } = await supabase.from("poop_rooms").select("id").eq("code", roomCode).single();
+
+  if (roomError || !room) {
+    throw new Error("Poop room non trovata");
+  }
+
+  // Trova il pooper nella stanza specifica
+  const { data: pooper, error } = await supabase
+    .from("poopers")
+    .select("id")
+    .eq("name", pooperName)
+    .eq("poop_room_id", room.id)
+    .single();
 
   if (error || !pooper) {
     throw new Error("Pooper non trovato!");
@@ -175,16 +219,31 @@ export async function resetPoopCountAction({
 // Set conteggio specifico
 export async function setPoopCountAction({
   pooperName,
+  roomCode,
   newCount,
   adminPassword
 }: {
   pooperName: string;
+  roomCode: string;
   newCount: number;
   adminPassword: string;
 }) {
   await validateAdminPassword(adminPassword);
 
-  const { data: pooper, error } = await supabase.from("poopers").select("id").eq("name", pooperName).single();
+  // Trova la stanza
+  const { data: room, error: roomError } = await supabase.from("poop_rooms").select("id").eq("code", roomCode).single();
+
+  if (roomError || !room) {
+    throw new Error("Poop room non trovata");
+  }
+
+  // Trova il pooper nella stanza specifica
+  const { data: pooper, error } = await supabase
+    .from("poopers")
+    .select("id")
+    .eq("name", pooperName)
+    .eq("poop_room_id", room.id)
+    .single();
 
   if (error || !pooper) {
     throw new Error("Pooper non trovato!");
@@ -250,11 +309,31 @@ export async function resetAllDataAction({
   };
 }
 
-export async function removePooperAction({ pooperName, adminPassword }: { pooperName: string; adminPassword: string }) {
+export async function removePooperAction({
+  pooperName,
+  roomCode,
+  adminPassword
+}: {
+  pooperName: string;
+  roomCode: string;
+  adminPassword: string;
+}) {
   await validateAdminPassword(adminPassword);
 
-  // Cerca il pooper
-  const { data: pooper, error } = await supabase.from("poopers").select("id").eq("name", pooperName).single();
+  // Trova la stanza
+  const { data: room, error: roomError } = await supabase.from("poop_rooms").select("id").eq("code", roomCode).single();
+
+  if (roomError || !room) {
+    throw new Error("Poop room non trovata");
+  }
+
+  // Cerca il pooper nella stanza specifica
+  const { data: pooper, error } = await supabase
+    .from("poopers")
+    .select("id")
+    .eq("name", pooperName)
+    .eq("poop_room_id", room.id)
+    .single();
 
   if (error || !pooper) {
     throw new Error("Pooper non trovato!");

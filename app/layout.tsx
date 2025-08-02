@@ -1,7 +1,7 @@
 import Header from "@/components/header/Header";
 import Manifest from "../components/Manifest";
 import "../styles/globals.css";
-import Footer from "@/components/footer/Footer";
+import ConditionalFooter from "@/components/ConditionalFooter";
 import localFont from "next/font/local";
 
 export const metadata = {
@@ -16,9 +16,9 @@ const tungsten = localFont({
   display: "swap"
 });
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="h-full overflow-hidden">
       <head>
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         <meta name="theme-color" content="#000000" />
@@ -27,10 +27,10 @@ export default function RootLayout({ children }) {
 
       <Manifest />
 
-      <body className={tungsten.className + " antialiased text-white bg-gray-900"}>
+      <body className={tungsten.className + " antialiased text-white bg-gray-900 h-full flex flex-col"}>
         <Header />
-        {children}
-        <Footer />
+        <main className="flex-1 overflow-hidden">{children}</main>
+        <ConditionalFooter />
       </body>
     </html>
   );

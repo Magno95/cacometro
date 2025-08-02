@@ -34,10 +34,28 @@ export function useCaccaSession() {
     setPooperName(name);
   }
 
+  function setAdminSession(roomId: string, roomCode: string) {
+    const adminName = "admin";
+    const map = JSON.parse(localStorage.getItem("pooper_by_room") || "{}");
+    map[roomId] = adminName;
+    localStorage.setItem("pooper_by_room", JSON.stringify(map));
+    localStorage.setItem("poop_room_id", roomId);
+    localStorage.setItem("poop_room_code", roomCode);
+    localStorage.setItem("is_admin", "true");
+    setCaccaId(roomId);
+    setRoomCode(roomCode);
+    setPooperName(adminName);
+  }
+
+  function isAdmin(): boolean {
+    return localStorage.getItem("is_admin") === "true";
+  }
+
   function clear() {
     localStorage.removeItem("poop_room_id");
     localStorage.removeItem("poop_room_code");
     localStorage.removeItem("pooper_by_room");
+    localStorage.removeItem("is_admin");
     setPooperName(null);
     setCaccaId(null);
     setRoomCode(null);
@@ -49,6 +67,8 @@ export function useCaccaSession() {
     roomCode,
     isValid,
     setSession,
+    setAdminSession,
+    isAdmin,
     clear
   };
 }

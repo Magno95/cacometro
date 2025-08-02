@@ -14,25 +14,15 @@ interface AddPoopBtnProps {
 
 const QUESTION_LIST = [
   "💩 Hai veramente cacato?",
-
   "Hai solo visitato il trono… o l’hai anche onorato?",
-
   "Sul serio sei andato in bagno… o era solo meditazione aromatica?",
-
   "Hai lasciato un ricordino o era solo una pausa di riflessione?",
-
   "Hai solo scrollato Instagram sul water o hai contribuito al sistema fognario?",
-
   "È stata una missione compiuta o un falso allarme?",
-
   "Hai solo scaldato la tavoletta o c’è stata un’eruzione?",
-
   "Parliamo di aria fritta o c'è stato del sostanzioso?",
-
   "Hai prodotto un capolavoro o era solo un’anteprima?",
-
   "È uscito qualcosa… o ti sei solo nascosto dal mondo?",
-
   "Dobbiamo chiamare il depuratore o basta una ventata?"
 ];
 

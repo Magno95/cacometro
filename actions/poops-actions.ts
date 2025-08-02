@@ -211,6 +211,30 @@ export async function getPooperCountAction(roomCode: string, pooperName: string)
   return pooper.poop_count ?? 0;
 }
 
+export async function listAllPoopRoomsAction(): Promise<
+  { id: string; code: string; name?: string; created_at: string }[]
+> {
+  try {
+    const { data: rooms, error } = await supabase
+      .from("poop_rooms")
+      .select("id, code, created_at")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("Error listing poop rooms:", error.message);
+      return [];
+    }
+
+    console.log("Poop rooms found:", rooms?.length || 0);
+    console.log("Rooms data:", rooms);
+
+    return rooms ?? [];
+  } catch (err) {
+    console.error("Exception in listAllPoopRoomsAction:", err);
+    return [];
+  }
+}
+
 export async function checkOrCreatePooperAction(roomCode: string, pooperName: string) {
   // Trova l'id stanza da codice
   const { data: room, error: roomError } = await supabase.from("poop_rooms").select("id").eq("code", roomCode).single();
