@@ -188,6 +188,29 @@ export async function listPoopsLogByRoomAction(roomCode: string): Promise<PoopLo
   );
 }
 
+export async function getPooperCountAction(roomCode: string, pooperName: string): Promise<number | null> {
+  // Trova la stanza
+  const { data: room, error: roomError } = await supabase.from("poop_rooms").select("id").eq("code", roomCode).single();
+
+  if (roomError || !room) {
+    return null;
+  }
+
+  // Trova il pooper specifico
+  const { data: pooper, error: pooperError } = await supabase
+    .from("poopers")
+    .select("poop_count")
+    .eq("poop_room_id", room.id)
+    .eq("name", pooperName)
+    .single();
+
+  if (pooperError || !pooper) {
+    return null;
+  }
+
+  return pooper.poop_count ?? 0;
+}
+
 export async function checkOrCreatePooperAction(roomCode: string, pooperName: string) {
   // Trova l'id stanza da codice
   const { data: room, error: roomError } = await supabase.from("poop_rooms").select("id").eq("code", roomCode).single();

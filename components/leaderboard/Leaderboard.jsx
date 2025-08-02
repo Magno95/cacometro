@@ -22,6 +22,7 @@ function Leaderboard({ poopRoomId, pooperName }) {
       console.error("Errore nel caricare le poops:", err);
       setError("Errore nel caricare i dati");
     } finally {
+      setLoading(false);
     }
   }, [poopRoomId]);
 
